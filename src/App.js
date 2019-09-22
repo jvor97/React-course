@@ -39,6 +39,16 @@ class App extends Component {
     }
 
   render() {
+
+    let person = null;
+    if (this.state.displayPerson) {
+      person = (
+      <div >
+      <Person click={this.switchNameHandler.bind(this,'Julianaaa')} name={this.state.persons[0].name} age={this.state.persons[0].age}></Person>
+      <Person name={this.state.persons[1].name} age={this.state.persons[1].age} change={this.nameChangeHandler}>My hobby is: gaming</Person>
+      </div>)
+    }
+    
     return (
       <div className="App">
       <h1>Hi, I am a React app </h1>
@@ -46,14 +56,7 @@ class App extends Component {
       <button onClick={this.togglePersonHandler}>Display or hide person</button>
       {/* <Person name="Julia" age="22"/>
       <Person name="Jozko" age="30">My hobby is: gaming</Person> */}
-    {
-       this.state.displayPerson === true ? 
-      <div >
-      <Person click={this.switchNameHandler.bind(this,'Julianaaa')} name={this.state.persons[0].name} age={this.state.persons[0].age}></Person>
-      <Person name={this.state.persons[1].name} age={this.state.persons[1].age} change={this.nameChangeHandler}>My hobby is: gaming</Person>
-      </div>
-       : null 
-    }
+    {person}
       </div>
     );
   }
