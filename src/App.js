@@ -5,8 +5,8 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons : [
-      {name: "Julia", age: 22},
-      {name: "Jozko", age: 30}
+      {id: "apo12", name: "Julia", age: 22},
+      {id: "akp45", name: "Jozko", age: 30}
     ],
     otherstate : "some other state",
     displayPerson: false
@@ -16,19 +16,56 @@ class App extends Component {
   //  DO NOT DO THIS this.state.persons[0].name = 'Juliana';
   this.setState({
     persons : [
-      {name: newName, age: 22},
-      {name: "Jozko", age: 31}
+      {id: "apo12", name: newName, age: 22},
+      {id: "akp45", name: "Jozko", age: 31}
     ]
   })
   }
 
-  nameChangeHandler = (event) => {
-    this.setState({
-      persons : [
-        {name: 'Julia', age: 22},
-        {name: event.target.value, age: 31}
-      ]
+  nameChangeHandler = (id, event) => {
+
+    // !!!   when using bind event has to be on second place (id, event) not (event,id)  !!!!
+    
+    //getting index of current person
+    const personIndex = this.state.persons.findIndex(per => {
+      return per.id === id;   
+      //  with findIndex u are looking for boolean and u are looking at every elemnt of an array- so here u are asking if the current id is the same as is the same as id obtained from change(person.id)
     })
+    //ak by si to robila cez index tak toto nemusim robit ale hned pouzivas index
+
+    //THINK THIS IS A LITTLE BIT CLEANER SOLUTION----------------
+       //copy of persons made with ...
+    const persons = [...this.state.persons]
+
+    //defining current person
+    const person = persons[personIndex];
+
+    //assigning the value from input to the current person name
+    person.name = event.target.value;
+
+      this.setState({
+        persons: persons
+      });
+
+
+      // ORIGINAL SOLUTION--------------------
+    //defining current person !!remember to do copy with ...
+    // const person = {
+    //   ...this.state.persons[personIndex]
+    // };
+
+    // //assigning the value from input to the current person name
+    // person.name = event.target.value;
+
+    // //doing copy of persons array, not to modify the original
+    //   const persons = [...this.state.persons]
+
+    //   //here idk why check it
+    //   persons[personIndex] = person;
+
+    //   this.setState({
+    //     persons: persons
+    //   });
     }
 
     togglePersonHandler = () => {
@@ -51,7 +88,7 @@ class App extends Component {
      person = ( 
        <div> 
        {this.state.persons.map((person, index) => {
-         return <Person name={person.name} age={person.age} click={this.removePersonHandler.bind(this,index)}/>
+         return <Person name={person.name} age={person.age} click={this.removePersonHandler.bind(this,index)} key={person.id} change={this.nameChangeHandler.bind(this,person.id)}/>
         })}
         </div>
 
