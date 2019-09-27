@@ -90,6 +90,14 @@ class App extends Component {
       borderRadius: '5px'
     }
 
+    let parClasses = [];
+    if (this.state.persons.length <= 2) {
+      parClasses.push('red');
+    }
+    if (this.state.persons.length <= 1) {
+      parClasses.push(' bold');
+    }
+
     let person = null;
     if (this.state.displayPerson) {
      person = ( 
@@ -107,6 +115,7 @@ class App extends Component {
       <h1>Hi, I am a React app </h1>
       {/* <button onClick={this.switchNameHandler.bind(this,'Juliana')}>Change text</button> */}
       <button onClick={this.togglePersonHandler} style={buttonStyle}>Display or hide person</button>
+      <p className={parClasses.join(' ')}>Text which change based on numbers of input.</p>
       {/* <Person name="Julia" age="22"/>
       <Person name="Jozko" age="30">My hobby is: gaming</Person> */}
     {person}
