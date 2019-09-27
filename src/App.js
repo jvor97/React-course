@@ -83,6 +83,13 @@ class App extends Component {
 
   render() {
 
+    const buttonStyle = {
+      padding: '10px',
+      backgroundColor: 'green',
+      color: 'white',
+      borderRadius: '5px'
+    }
+
     let person = null;
     if (this.state.displayPerson) {
      person = ( 
@@ -91,15 +98,15 @@ class App extends Component {
          return <Person name={person.name} age={person.age} click={this.removePersonHandler.bind(this,index)} key={person.id} change={this.nameChangeHandler.bind(this,person.id)}/>
         })}
         </div>
-
      )
+     buttonStyle.backgroundColor = 'red';
     }
 
     return (
       <div className="App">
       <h1>Hi, I am a React app </h1>
       {/* <button onClick={this.switchNameHandler.bind(this,'Juliana')}>Change text</button> */}
-      <button onClick={this.togglePersonHandler}>Display or hide person</button>
+      <button onClick={this.togglePersonHandler} style={buttonStyle}>Display or hide person</button>
       {/* <Person name="Julia" age="22"/>
       <Person name="Jozko" age="30">My hobby is: gaming</Person> */}
     {person}
